@@ -3,14 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { MapPin, Briefcase, Heart, Star, Users, MessageCircle, ChevronDown } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { MapPin, Briefcase, Heart, Star, Users, MessageCircle } from "lucide-react";
+import { motion } from "framer-motion";
 
 const fetchDashboardData = async () => {
   const params = new URLSearchParams(window.location.search);
@@ -76,7 +70,7 @@ const fetchDashboardData = async () => {
 };
 
 const MemberCard = ({ member }) => (
-  <Card className="mb-6 bg-gradient-to-br from-[#A062F9] to-[#1A77DA] text-white">
+  <Card className="mb-6 bg-gradient-to-br from-purple-500 to-blue-600 text-white">
     <CardHeader className="flex flex-row items-center gap-4">
       <Avatar className="h-20 w-20 border-2 border-white">
         <AvatarImage src={member.image_url} alt={member.name} />
@@ -104,7 +98,7 @@ const MemberCard = ({ member }) => (
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Badge variant="secondary" className="bg-white text-[#A062F9]">{skill}</Badge>
+                <Badge variant="secondary" className="bg-white text-purple-700">{skill}</Badge>
               </motion.div>
             ))}
           </div>
@@ -168,92 +162,97 @@ const MemberCard = ({ member }) => (
   </Card>
 );
 
-const MatchCard = ({ match, index }) => (
-  <Accordion type="single" collapsible className="mb-4" defaultValue={index === 0 ? `item-${index}` : undefined}>
-    <AccordionItem value={`item-${index}`}>
-      <Card className="overflow-hidden">
-        <AccordionTrigger className="w-full">
-          <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-[#A062F9] to-[#1A77DA] text-white p-4">
-            <div className="flex items-center gap-4">
-              <Avatar className="h-16 w-16 border-2 border-white">
-                <AvatarImage src={match.image_url} alt={match.name} />
-                <AvatarFallback>{match.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-              </Avatar>
-              <div className="text-left">
-                <CardTitle className="text-xl">{match.name}</CardTitle>
-                <p className="text-sm text-purple-200">{match.experience_level}</p>
-              </div>
-            </div>
-            <div className="text-right flex items-center gap-4">
-              <div>
-                <div className="text-3xl font-bold">{match.matching_score}/10</div>
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 1, ease: "easeOut" }}
-                >
-                  <Progress value={match.matching_score * 10} className="w-32 h-2" />
-                </motion.div>
-              </div>
-              <ChevronDown className="h-6 w-6 transition-transform duration-200" />
-            </div>
-          </CardHeader>
-        </AccordionTrigger>
-        <AccordionContent>
-          <CardContent className="pt-4">
-            <AnimatePresence>
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <p className="text-sm mb-4 italic text-gray-600">{match.explanation}</p>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <h4 className="font-semibold mb-2 flex items-center gap-2 text-[#A062F9]">
-                      <Star className="h-5 w-5" /> Complementary Skills
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {match.complementary_skills.map(skill => (
-                        <Badge key={skill} variant="secondary" className="bg-purple-100 text-[#A062F9]">{skill}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-2 flex items-center gap-2 text-[#1A77DA]">
-                      <Heart className="h-5 w-5" /> Shared Interests
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {match.shared_interests.map(interest => (
-                        <Badge key={interest} variant="outline" className="border-blue-300 text-[#1A77DA]">{interest}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <h4 className="font-semibold mb-2 flex items-center gap-2 text-gray-700">
-                    <Briefcase className="h-5 w-5" /> Potential Collaboration
-                  </h4>
-                  <p className="text-sm text-gray-600">{match.potential_collaboration}</p>
-                </div>
-                <div className="mt-4 grid grid-cols-2 gap-4 text-sm text-gray-600">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-5 w-5 text-[#A062F9]" />
-                    <span>{match.location}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Users className="h-5 w-5 text-[#1A77DA]" />
-                    <span>{match.geographical_synergy}</span>
-                  </div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </CardContent>
-        </AccordionContent>
-      </Card>
-    </AccordionItem>
-  </Accordion>
+const MatchCard = ({ match }) => (
+  <Card className="mb-4 overflow-hidden">
+    <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-purple-500 to-blue-600 text-white">
+      <div className="flex items-center gap-4">
+        <Avatar className="h-16 w-16 border-2 border-white">
+          <AvatarImage src={match.image_url} alt={match.name} />
+          <AvatarFallback>{match.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+        </Avatar>
+        <div>
+          <CardTitle className="text-xl">{match.name}</CardTitle>
+          <p className="text-sm text-purple-200">{match.experience_level}</p>
+        </div>
+      </div>
+      <div className="text-right">
+        <div className="text-3xl font-bold">{match.matching_score}/10</div>
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: "100%" }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
+          <Progress value={match.matching_score * 10} className="w-32 h-2" />
+        </motion.div>
+      </div>
+    </CardHeader>
+    <CardContent className="pt-4">
+      <motion.p 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="text-sm mb-4 italic text-gray-600"
+      >
+        {match.explanation}
+      </motion.p>
+      <div className="grid grid-cols-2 gap-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <h4 className="font-semibold mb-2 flex items-center gap-2 text-purple-700">
+            <Star className="h-5 w-5" /> Complementary Skills
+          </h4>
+          <div className="flex flex-wrap gap-2">
+            {match.complementary_skills.map(skill => (
+              <Badge key={skill} variant="secondary" className="bg-purple-100 text-purple-700">{skill}</Badge>
+            ))}
+          </div>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <h4 className="font-semibold mb-2 flex items-center gap-2 text-blue-700">
+            <Heart className="h-5 w-5" /> Shared Interests
+          </h4>
+          <div className="flex flex-wrap gap-2">
+            {match.shared_interests.map(interest => (
+              <Badge key={interest} variant="outline" className="border-blue-300 text-blue-700">{interest}</Badge>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+        className="mt-4"
+      >
+        <h4 className="font-semibold mb-2 flex items-center gap-2 text-gray-700">
+          <Briefcase className="h-5 w-5" /> Potential Collaboration
+        </h4>
+        <p className="text-sm text-gray-600">{match.potential_collaboration}</p>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+        className="mt-4 grid grid-cols-2 gap-4 text-sm text-gray-600"
+      >
+        <div className="flex items-center gap-2">
+          <MapPin className="h-5 w-5 text-purple-500" />
+          <span>{match.location}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Users className="h-5 w-5 text-blue-500" />
+          <span>{match.geographical_synergy}</span>
+        </div>
+      </motion.div>
+    </CardContent>
+  </Card>
 );
 
 const Index = () => {
@@ -262,18 +261,18 @@ const Index = () => {
     queryFn: fetchDashboardData
   });
 
-  if (isLoading) return <div className="text-center mt-8 text-2xl text-[#A062F9]">Loading...</div>;
+  if (isLoading) return <div className="text-center mt-8 text-2xl text-purple-600">Loading...</div>;
   if (error) return <div className="text-center mt-8 text-2xl text-red-500">Error: {error.message}</div>;
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-gradient-to-br from-purple-50 to-blue-50 min-h-screen font-['Poppins']">
+    <div className="container mx-auto px-4 py-8 bg-gradient-to-br from-purple-50 to-blue-50 min-h-screen">
       <motion.h1 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-4xl font-bold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-[#A062F9] to-[#1A77DA]"
+        className="text-4xl font-bold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600"
       >
-        AAA Matchmaker
+        Talent Pool Matchmaker Dashboard
       </motion.h1>
       <div className="grid md:grid-cols-3 gap-8">
         <motion.div 
@@ -282,7 +281,7 @@ const Index = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="md:col-span-1"
         >
-          <h2 className="text-2xl font-semibold mb-4 text-[#A062F9]">Your Profile</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-purple-700">Your Profile</h2>
           <MemberCard member={data.member} />
         </motion.div>
         <motion.div 
@@ -291,7 +290,7 @@ const Index = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="md:col-span-2"
         >
-          <h2 className="text-2xl font-semibold mb-4 text-[#1A77DA]">Top Matches</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-blue-700">Top Matches</h2>
           {data.matches.map((match, index) => (
             <motion.div
               key={`${match.name}-${index}`}
@@ -299,7 +298,7 @@ const Index = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
             >
-              <MatchCard match={match} index={index} />
+              <MatchCard match={match} />
             </motion.div>
           ))}
         </motion.div>
