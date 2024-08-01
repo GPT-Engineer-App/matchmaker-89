@@ -165,39 +165,37 @@ const MemberCard = ({ member }) => (
 );
 
 const MatchCard = ({ match, isOpen, onToggle }) => (
-  <Card className="mb-4 overflow-hidden">
-    <AccordionItem value={match.name} className="border-none">
-      <AccordionTrigger
-        onClick={onToggle}
-        className="w-full hover:no-underline"
-      >
-        <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-[#A062F9] to-[#1A77DA] text-white p-4 w-full">
-          <div className="flex items-center gap-4">
-            <Avatar className="h-16 w-16 border-2 border-white">
-              <AvatarImage src={match.image_url} alt={match.name} />
-              <AvatarFallback>{match.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-            </Avatar>
-            <div>
-              <CardTitle className="text-xl">{match.name}</CardTitle>
-              <p className="text-sm text-purple-200">{match.experience_level}</p>
-            </div>
+  <AccordionItem value={match.name} className="mb-4 overflow-hidden rounded-lg shadow-md">
+    <AccordionTrigger
+      onClick={onToggle}
+      className="w-full hover:no-underline p-0"
+    >
+      <div className="flex flex-row items-center justify-between bg-gradient-to-r from-[#A062F9] to-[#1A77DA] text-white p-4 w-full">
+        <div className="flex items-center gap-4">
+          <Avatar className="h-16 w-16 border-2 border-white">
+            <AvatarImage src={match.image_url} alt={match.name} />
+            <AvatarFallback>{match.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+          </Avatar>
+          <div>
+            <h3 className="text-xl font-semibold">{match.name}</h3>
+            <p className="text-sm text-purple-200">{match.experience_level}</p>
           </div>
-          <div className="text-right flex items-center gap-4">
-            <div>
-              <div className="text-3xl font-bold">{match.matching_score}/10</div>
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 1, ease: "easeOut" }}
-              >
-                <Progress value={match.matching_score * 10} className="w-32 h-2" />
-              </motion.div>
-            </div>
-            <ChevronDown className={`h-6 w-6 transition-transform duration-300 ${isOpen ? 'transform rotate-180' : ''}`} />
+        </div>
+        <div className="text-right flex items-center gap-4">
+          <div>
+            <div className="text-3xl font-bold">{match.matching_score}/10</div>
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 1, ease: "easeOut" }}
+            >
+              <Progress value={match.matching_score * 10} className="w-32 h-2" />
+            </motion.div>
           </div>
-        </CardHeader>
-      </AccordionTrigger>
-      <AccordionContent>
+        </div>
+      </div>
+    </AccordionTrigger>
+    <AccordionContent className="p-0">
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -303,7 +301,7 @@ const Index = () => {
           className="md:col-span-2"
         >
           <h2 className="text-2xl font-semibold mb-4 text-blue-700">Top Matches</h2>
-          <Accordion type="single" collapsible value={openMatch} onValueChange={setOpenMatch}>
+          <Accordion type="single" collapsible value={openMatch} onValueChange={setOpenMatch} className="space-y-4">
             {data.matches.map((match, index) => (
               <motion.div
                 key={`${match.name}-${index}`}
