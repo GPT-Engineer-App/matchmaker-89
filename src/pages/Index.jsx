@@ -196,61 +196,60 @@ const MatchCard = ({ match, isOpen, onToggle }) => (
       </div>
     </AccordionTrigger>
     <AccordionContent className="p-0">
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <CardContent className="pt-4">
-                <p className="text-sm mb-4 italic text-gray-600">{match.explanation}</p>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <h4 className="font-semibold mb-2 flex items-center gap-2 text-purple-700">
-                      <Star className="h-5 w-5" /> Complementary Skills
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {match.complementary_skills.map(skill => (
-                        <Badge key={skill} variant="secondary" className="bg-purple-100 text-purple-700">{skill}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-2 flex items-center gap-2 text-blue-700">
-                      <Heart className="h-5 w-5" /> Shared Interests
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {match.shared_interests.map(interest => (
-                        <Badge key={interest} variant="outline" className="border-blue-300 text-blue-700">{interest}</Badge>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <h4 className="font-semibold mb-2 flex items-center gap-2 text-gray-700">
-                    <Briefcase className="h-5 w-5" /> Potential Collaboration
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <CardContent className="pt-4">
+              <p className="text-sm mb-4 italic text-gray-600">{match.explanation}</p>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <h4 className="font-semibold mb-2 flex items-center gap-2 text-purple-700">
+                    <Star className="h-5 w-5" /> Complementary Skills
                   </h4>
-                  <p className="text-sm text-gray-600">{match.potential_collaboration}</p>
-                </div>
-                <div className="mt-4 grid grid-cols-2 gap-4 text-sm text-gray-600">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-5 w-5 text-purple-500" />
-                    <span>{match.location}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Users className="h-5 w-5 text-blue-500" />
-                    <span>{match.geographical_synergy}</span>
+                  <div className="flex flex-wrap gap-2">
+                    {match.complementary_skills.map(skill => (
+                      <Badge key={skill} variant="secondary" className="bg-purple-100 text-purple-700">{skill}</Badge>
+                    ))}
                   </div>
                 </div>
-              </CardContent>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </AccordionContent>
-    </AccordionItem>
-  </Card>
+                <div>
+                  <h4 className="font-semibold mb-2 flex items-center gap-2 text-blue-700">
+                    <Heart className="h-5 w-5" /> Shared Interests
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {match.shared_interests.map(interest => (
+                      <Badge key={interest} variant="outline" className="border-blue-300 text-blue-700">{interest}</Badge>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4">
+                <h4 className="font-semibold mb-2 flex items-center gap-2 text-gray-700">
+                  <Briefcase className="h-5 w-5" /> Potential Collaboration
+                </h4>
+                <p className="text-sm text-gray-600">{match.potential_collaboration}</p>
+              </div>
+              <div className="mt-4 grid grid-cols-2 gap-4 text-sm text-gray-600">
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-5 w-5 text-purple-500" />
+                  <span>{match.location}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Users className="h-5 w-5 text-blue-500" />
+                  <span>{match.geographical_synergy}</span>
+                </div>
+              </div>
+            </CardContent>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </AccordionContent>
+  </AccordionItem>
 );
 
 const Index = () => {
