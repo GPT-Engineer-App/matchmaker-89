@@ -25,7 +25,7 @@ const fetchDashboardData = async () => {
     {
       name: params.get('match1_name') || 'Alice Smith',
       image_url: params.get('match1_image_url') || 'https://i.pravatar.cc/150?u=alicesmith',
-      matching_score: parseInt(params.get('match1_score')) || 85,
+      matching_score: parseInt(params.get('match1_score')) || 8,
       explanation: params.get('match1_explanation') || 'Strong skill complementarity and shared interests',
       complementary_skills: params.get('match1_complementary_skills')?.split(',') || ['UI/UX Design', 'Project Management'],
       potential_collaboration: params.get('match1_collaboration') || 'Tech startup focused on AI-driven solutions',
@@ -38,7 +38,7 @@ const fetchDashboardData = async () => {
     {
       name: params.get('match2_name') || 'Bob Johnson',
       image_url: params.get('match2_image_url') || 'https://i.pravatar.cc/150?u=bobjohnson',
-      matching_score: parseInt(params.get('match2_score')) || 75,
+      matching_score: parseInt(params.get('match2_score')) || 7,
       explanation: params.get('match2_explanation') || 'Complementary industry experience and business goals',
       complementary_skills: params.get('match2_complementary_skills')?.split(',') || ['Marketing', 'Sales'],
       potential_collaboration: params.get('match2_collaboration') || 'B2B SaaS product development',
@@ -51,7 +51,7 @@ const fetchDashboardData = async () => {
     {
       name: params.get('match3_name') || 'Emma Davis',
       image_url: params.get('match3_image_url') || 'https://i.pravatar.cc/150?u=emmadavis',
-      matching_score: parseInt(params.get('match3_score')) || 70,
+      matching_score: parseInt(params.get('match3_score')) || 6,
       explanation: params.get('match3_explanation') || 'Shared interests and potential for mentorship',
       complementary_skills: params.get('match3_complementary_skills')?.split(',') || ['Data Science', 'Machine Learning'],
       potential_collaboration: params.get('match3_collaboration') || 'AI research project',
@@ -182,7 +182,7 @@ const MatchCard = ({ match }) => (
           animate={{ width: "100%" }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
-          <Progress value={match.matching_score * 10} max={100} className="w-32 h-2" />
+          <Progress value={match.matching_score * 10} className="w-32 h-2" />
         </motion.div>
       </div>
     </CardHeader>
