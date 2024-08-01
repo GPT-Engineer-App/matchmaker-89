@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { MapPin, Briefcase, Heart, Star, Users, MessageCircle } from "lucide-react";
-import { motion } from "framer-motion";
+import { MapPin, Briefcase, Heart, Star, Users, MessageCircle, ChevronDown } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const fetchDashboardData = async () => {
   const params = new URLSearchParams(window.location.search);
@@ -162,96 +164,94 @@ const MemberCard = ({ member }) => (
   </Card>
 );
 
-const MatchCard = ({ match }) => (
+const MatchCard = ({ match, isOpen, onToggle }) => (
   <Card className="mb-4 overflow-hidden">
-    <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-[#A062F9] to-[#1A77DA] text-white">
-      <div className="flex items-center gap-4">
-        <Avatar className="h-16 w-16 border-2 border-white">
-          <AvatarImage src={match.image_url} alt={match.name} />
-          <AvatarFallback>{match.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-        </Avatar>
-        <div>
-          <CardTitle className="text-xl">{match.name}</CardTitle>
-          <p className="text-sm text-purple-200">{match.experience_level}</p>
-        </div>
-      </div>
-      <div className="text-right">
-        <div className="text-3xl font-bold">{match.matching_score}/10</div>
-        <motion.div
-          initial={{ width: 0 }}
-          animate={{ width: "100%" }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
-          <Progress value={match.matching_score * 10} className="w-32 h-2" />
-        </motion.div>
-      </div>
-    </CardHeader>
-    <CardContent className="pt-4">
-      <motion.p 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="text-sm mb-4 italic text-gray-600"
+    <AccordionItem value={match.name} className="border-none">
+      <AccordionTrigger
+        onClick={onToggle}
+        className="w-full hover:no-underline"
       >
-        {match.explanation}
-      </motion.p>
-      <div className="grid grid-cols-2 gap-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <h4 className="font-semibold mb-2 flex items-center gap-2 text-purple-700">
-            <Star className="h-5 w-5" /> Complementary Skills
-          </h4>
-          <div className="flex flex-wrap gap-2">
-            {match.complementary_skills.map(skill => (
-              <Badge key={skill} variant="secondary" className="bg-purple-100 text-purple-700">{skill}</Badge>
-            ))}
+        <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-[#A062F9] to-[#1A77DA] text-white p-4 w-full">
+          <div className="flex items-center gap-4">
+            <Avatar className="h-16 w-16 border-2 border-white">
+              <AvatarImage src={match.image_url} alt={match.name} />
+              <AvatarFallback>{match.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
+            </Avatar>
+            <div>
+              <CardTitle className="text-xl">{match.name}</CardTitle>
+              <p className="text-sm text-purple-200">{match.experience_level}</p>
+            </div>
           </div>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <h4 className="font-semibold mb-2 flex items-center gap-2 text-blue-700">
-            <Heart className="h-5 w-5" /> Shared Interests
-          </h4>
-          <div className="flex flex-wrap gap-2">
-            {match.shared_interests.map(interest => (
-              <Badge key={interest} variant="outline" className="border-blue-300 text-blue-700">{interest}</Badge>
-            ))}
+          <div className="text-right flex items-center gap-4">
+            <div>
+              <div className="text-3xl font-bold">{match.matching_score}/10</div>
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1, ease: "easeOut" }}
+              >
+                <Progress value={match.matching_score * 10} className="w-32 h-2" />
+              </motion.div>
+            </div>
+            <ChevronDown className={`h-6 w-6 transition-transform duration-300 ${isOpen ? 'transform rotate-180' : ''}`} />
           </div>
-        </motion.div>
-      </div>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.4 }}
-        className="mt-4"
-      >
-        <h4 className="font-semibold mb-2 flex items-center gap-2 text-gray-700">
-          <Briefcase className="h-5 w-5" /> Potential Collaboration
-        </h4>
-        <p className="text-sm text-gray-600">{match.potential_collaboration}</p>
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.5 }}
-        className="mt-4 grid grid-cols-2 gap-4 text-sm text-gray-600"
-      >
-        <div className="flex items-center gap-2">
-          <MapPin className="h-5 w-5 text-purple-500" />
-          <span>{match.location}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <Users className="h-5 w-5 text-blue-500" />
-          <span>{match.geographical_synergy}</span>
-        </div>
-      </motion.div>
-    </CardContent>
+        </CardHeader>
+      </AccordionTrigger>
+      <AccordionContent>
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <CardContent className="pt-4">
+                <p className="text-sm mb-4 italic text-gray-600">{match.explanation}</p>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <h4 className="font-semibold mb-2 flex items-center gap-2 text-purple-700">
+                      <Star className="h-5 w-5" /> Complementary Skills
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {match.complementary_skills.map(skill => (
+                        <Badge key={skill} variant="secondary" className="bg-purple-100 text-purple-700">{skill}</Badge>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-2 flex items-center gap-2 text-blue-700">
+                      <Heart className="h-5 w-5" /> Shared Interests
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {match.shared_interests.map(interest => (
+                        <Badge key={interest} variant="outline" className="border-blue-300 text-blue-700">{interest}</Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <h4 className="font-semibold mb-2 flex items-center gap-2 text-gray-700">
+                    <Briefcase className="h-5 w-5" /> Potential Collaboration
+                  </h4>
+                  <p className="text-sm text-gray-600">{match.potential_collaboration}</p>
+                </div>
+                <div className="mt-4 grid grid-cols-2 gap-4 text-sm text-gray-600">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-5 w-5 text-purple-500" />
+                    <span>{match.location}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Users className="h-5 w-5 text-blue-500" />
+                    <span>{match.geographical_synergy}</span>
+                  </div>
+                </div>
+              </CardContent>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </AccordionContent>
+    </AccordionItem>
   </Card>
 );
 
@@ -260,6 +260,18 @@ const Index = () => {
     queryKey: ['dashboardData'],
     queryFn: fetchDashboardData
   });
+
+  const [openMatch, setOpenMatch] = useState(null);
+
+  useEffect(() => {
+    if (data && data.matches.length > 0) {
+      setOpenMatch(data.matches[0].name);
+    }
+  }, [data]);
+
+  const handleToggle = (matchName) => {
+    setOpenMatch(openMatch === matchName ? null : matchName);
+  };
 
   if (isLoading) return <div className="text-center mt-8 text-2xl text-purple-600">Loading...</div>;
   if (error) return <div className="text-center mt-8 text-2xl text-red-500">Error: {error.message}</div>;
@@ -291,16 +303,22 @@ const Index = () => {
           className="md:col-span-2"
         >
           <h2 className="text-2xl font-semibold mb-4 text-blue-700">Top Matches</h2>
-          {data.matches.map((match, index) => (
-            <motion.div
-              key={`${match.name}-${index}`}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-            >
-              <MatchCard match={match} />
-            </motion.div>
-          ))}
+          <Accordion type="single" collapsible value={openMatch} onValueChange={setOpenMatch}>
+            {data.matches.map((match, index) => (
+              <motion.div
+                key={`${match.name}-${index}`}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+              >
+                <MatchCard
+                  match={match}
+                  isOpen={openMatch === match.name}
+                  onToggle={() => handleToggle(match.name)}
+                />
+              </motion.div>
+            ))}
+          </Accordion>
         </motion.div>
       </div>
     </div>
