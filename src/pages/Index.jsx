@@ -176,13 +176,13 @@ const MatchCard = ({ match }) => (
         </div>
       </div>
       <div className="text-right">
-        <div className="text-3xl font-bold">{(match.matching_score / 10 * 100).toFixed(0)}%</div>
+        <div className="text-3xl font-bold">{match.matching_score}/10</div>
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: "100%" }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
-          <Progress value={match.matching_score * 10} className="w-32 h-2" />
+          <Progress value={match.matching_score * 10} max={100} className="w-32 h-2" />
         </motion.div>
       </div>
     </CardHeader>
