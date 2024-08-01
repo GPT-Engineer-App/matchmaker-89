@@ -70,7 +70,7 @@ const fetchDashboardData = async () => {
 };
 
 const MemberCard = ({ member }) => (
-  <Card className="mb-6 bg-gradient-to-br from-purple-500 to-blue-600 text-white">
+  <Card className="mb-6 bg-gradient-to-br from-[#A062F9] to-[#1A77DA] text-white">
     <CardHeader className="flex flex-row items-center gap-4">
       <Avatar className="h-20 w-20 border-2 border-white">
         <AvatarImage src={member.image_url} alt={member.name} />
@@ -164,7 +164,7 @@ const MemberCard = ({ member }) => (
 
 const MatchCard = ({ match }) => (
   <Card className="mb-4 overflow-hidden">
-    <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-purple-500 to-blue-600 text-white">
+    <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-[#A062F9] to-[#1A77DA] text-white">
       <div className="flex items-center gap-4">
         <Avatar className="h-16 w-16 border-2 border-white">
           <AvatarImage src={match.image_url} alt={match.name} />
@@ -265,14 +265,14 @@ const Index = () => {
   if (error) return <div className="text-center mt-8 text-2xl text-red-500">Error: {error.message}</div>;
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-gradient-to-br from-purple-50 to-blue-50 min-h-screen">
+    <div className="container mx-auto px-4 py-8 bg-gradient-to-br from-[#A062F9]/10 to-[#1A77DA]/10 min-h-screen">
       <motion.h1 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-4xl font-bold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600"
+        className="text-4xl font-bold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-[#A062F9] to-[#1A77DA]"
       >
-        Talent Pool Matchmaker Dashboard
+        AAA Matchmaker
       </motion.h1>
       <div className="grid md:grid-cols-3 gap-8">
         <motion.div 
